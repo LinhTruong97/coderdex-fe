@@ -68,6 +68,7 @@ export default function PokemonModal({ open, setOpen }) {
     setTimeout(() => {
       navigate(`/pokemons/${id}`);
     }, 3000);
+    handleClose();
   };
 
   const handleClose = () => setOpen(false);
