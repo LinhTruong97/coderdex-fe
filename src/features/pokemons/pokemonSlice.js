@@ -109,8 +109,8 @@ export const editPokemon = createAsyncThunk(
         category,
         abilities,
       });
+      // dispatch(getPokemonById(id));
       toast.success("Edit successfully");
-      dispatch(getPokemonById(id));
       return;
     } catch (error) {
       toast.error(error.message);

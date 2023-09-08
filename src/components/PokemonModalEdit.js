@@ -48,30 +48,30 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
-    const {
-      name,
-      url,
-      type1,
-      type2,
-      description,
-      height,
-      weight,
-      category,
-      abilities,
+    let {
+      newName,
+      newUrl,
+      newType1,
+      newType2,
+      newDescription,
+      newHeight,
+      newWeight,
+      newCategory,
+      newAbilities,
     } = data;
-    const newType1 = type1 ? type1 : pokemon?.types[0];
-    const newType2 = type2 ? type2 : pokemon?.types[1];
+    newType1 = newType1 ? newType1 : pokemon?.types[0];
+    newType2 = newType2 ? newType2 : pokemon?.types[1];
     dispatch(
       editPokemon({
-        name,
+        newName,
         id: pokemon?.id,
-        imgUrl: url,
+        imgUrl: newUrl,
         types: newType2 ? [newType1, newType2] : [newType1],
-        description,
-        height,
-        weight,
-        category,
-        abilities,
+        newDescription,
+        newHeight,
+        newWeight,
+        newCategory,
+        newAbilities,
       })
     ).then(() => reset());
     navigate(`/pokemons/${pokemon?.id}`);
@@ -104,7 +104,7 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
               >
                 <Stack spacing={2}>
                   <FTextField
-                    name="name"
+                    name="newName"
                     fullWidth
                     placeholder={pokemon?.name}
                     sx={{
@@ -116,7 +116,7 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
                   />
 
                   <FTextField
-                    name="url"
+                    name="newUrl"
                     fullWidth
                     // rows={4}
                     placeholder={pokemon?.url}
@@ -128,7 +128,7 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
                     }}
                   />
                   <FTextField
-                    name="type1"
+                    name="newType1"
                     fullWidth
                     rows={4}
                     placeholder={pokemon?.types[0]}
@@ -141,7 +141,7 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
                   />
 
                   <FTextField
-                    name="type2"
+                    name="newType2"
                     fullWidth
                     rows={4}
                     placeholder={pokemon?.types[1]}
@@ -155,7 +155,7 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
                 </Stack>
                 <Stack spacing={2}>
                   <FTextField
-                    name="description"
+                    name="newDescription"
                     fullWidth
                     rows={4}
                     placeholder={pokemon?.description}
@@ -167,7 +167,7 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
                     }}
                   />
                   <FTextField
-                    name="height"
+                    name="newHeight"
                     fullWidth
                     rows={4}
                     placeholder={pokemon?.height}
@@ -179,7 +179,7 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
                     }}
                   />
                   <FTextField
-                    name="weight"
+                    name="newWeight"
                     fullWidth
                     rows={4}
                     placeholder={pokemon?.weight}
@@ -191,7 +191,7 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
                     }}
                   />
                   <FTextField
-                    name="category"
+                    name="newCategory"
                     fullWidth
                     rows={4}
                     placeholder={pokemon?.category}
@@ -203,7 +203,7 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
                     }}
                   />
                   <FTextField
-                    name="abilities"
+                    name="newAbilities"
                     fullWidth
                     rows={4}
                     placeholder={pokemon?.abilities}
