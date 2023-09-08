@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { alpha, Stack } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
-import { addPokemon } from "../features/pokemons/pokemonSlice";
+import { editPokemon } from "../features/pokemons/pokemonSlice";
 import { useNavigate } from "react-router-dom";
 
 const style = {
@@ -22,27 +22,34 @@ const style = {
   p: 4,
 };
 
-const defaultValues = {
-  name: "",
-  id: "",
-  url: "",
-  type1: "",
-  type2: "",
-};
-
-export default function PokemonModal({ open, setOpen }) {
-  const navigate = useNavigate();
-  const methods = useForm(defaultValues);
+export default function PokemonModalEdit({ open, setOpen, pokemon }) {
+  const defaultValues = {
+    name: pokemon?.name,
+    url: pokemon?.url,
+    type1: pokemon?.types[0],
+    type2: pokemon?.types[1] || "",
+    description: pokemon?.description,
+    height: pokemon?.height,
+    weight: pokemon?.weight,
+    category: pokemon?.category,
+    abilities: pokemon?.abilities,
+  };
+  const methods = useForm({
+    defaultValues,
+  });
   const {
     handleSubmit,
+    reset,
     formState: { isSubmitting },
   } = methods;
+
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
     const {
       name,
-      id,
       url,
       type1,
       type2,
@@ -52,20 +59,23 @@ export default function PokemonModal({ open, setOpen }) {
       category,
       abilities,
     } = data;
+    const newType1 = type1 ? type1 : pokemon?.types[0];
+    const newType2 = type2 ? type2 : pokemon?.types[1];
     dispatch(
-      addPokemon({
+      editPokemon({
         name,
-        id,
+        id: pokemon?.id,
         imgUrl: url,
-        types: type2 ? [type1, type2] : [type1],
+        types: newType2 ? [newType1, newType2] : [newType1],
         description,
         height,
         weight,
         category,
         abilities,
       })
-    );
-    navigate(`/pokemons/${id}`);
+    ).then(() => reset());
+    handleClose();
+    navigate(`/pokemons/${pokemon?.id}`);
   };
 
   const handleClose = () => setOpen(false);
@@ -92,8 +102,7 @@ export default function PokemonModal({ open, setOpen }) {
                   <FTextField
                     name="name"
                     fullWidth
-                    rows={4}
-                    placeholder="Name"
+                    placeholder={pokemon?.name}
                     sx={{
                       "& fieldset": {
                         borderWidth: `1px !important`,
@@ -101,23 +110,12 @@ export default function PokemonModal({ open, setOpen }) {
                       },
                     }}
                   />
-                  <FTextField
-                    name="id"
-                    fullWidth
-                    rows={4}
-                    placeholder="Id"
-                    sx={{
-                      "& fieldset": {
-                        borderWidth: `1px !important`,
-                        borderColor: alpha("#919EAB", 0.32),
-                      },
-                    }}
-                  />
+
                   <FTextField
                     name="url"
                     fullWidth
                     // rows={4}
-                    placeholder="Image Url"
+                    placeholder={pokemon?.url}
                     sx={{
                       "& fieldset": {
                         borderWidth: `1px !important`,
@@ -129,7 +127,7 @@ export default function PokemonModal({ open, setOpen }) {
                     name="type1"
                     fullWidth
                     rows={4}
-                    placeholder="Type 1"
+                    placeholder={pokemon?.types[0]}
                     sx={{
                       "& fieldset": {
                         borderWidth: `1px !important`,
@@ -142,7 +140,7 @@ export default function PokemonModal({ open, setOpen }) {
                     name="type2"
                     fullWidth
                     rows={4}
-                    placeholder="Type 2"
+                    placeholder={pokemon?.types[1]}
                     sx={{
                       "& fieldset": {
                         borderWidth: `1px !important`,
@@ -156,7 +154,7 @@ export default function PokemonModal({ open, setOpen }) {
                     name="description"
                     fullWidth
                     rows={4}
-                    placeholder="Description"
+                    placeholder={pokemon?.description}
                     sx={{
                       "& fieldset": {
                         borderWidth: `1px !important`,
@@ -168,7 +166,7 @@ export default function PokemonModal({ open, setOpen }) {
                     name="height"
                     fullWidth
                     rows={4}
-                    placeholder="Height"
+                    placeholder={pokemon?.height}
                     sx={{
                       "& fieldset": {
                         borderWidth: `1px !important`,
@@ -180,7 +178,7 @@ export default function PokemonModal({ open, setOpen }) {
                     name="weight"
                     fullWidth
                     rows={4}
-                    placeholder="Weight"
+                    placeholder={pokemon?.weight}
                     sx={{
                       "& fieldset": {
                         borderWidth: `1px !important`,
@@ -192,7 +190,7 @@ export default function PokemonModal({ open, setOpen }) {
                     name="category"
                     fullWidth
                     rows={4}
-                    placeholder="Category"
+                    placeholder={pokemon?.category}
                     sx={{
                       "& fieldset": {
                         borderWidth: `1px !important`,
@@ -204,7 +202,7 @@ export default function PokemonModal({ open, setOpen }) {
                     name="abilities"
                     fullWidth
                     rows={4}
-                    placeholder="Abilities"
+                    placeholder={pokemon?.abilities}
                     sx={{
                       "& fieldset": {
                         borderWidth: `1px !important`,
@@ -230,7 +228,7 @@ export default function PokemonModal({ open, setOpen }) {
                     // || isLoading
                   }
                 >
-                  Create Pokemon
+                  Edit Pokemon
                 </LoadingButton>
               </Box>
             </Stack>
