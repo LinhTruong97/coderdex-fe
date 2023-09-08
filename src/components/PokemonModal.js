@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { alpha, Stack } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
-import { addPokemon } from "../features/pokemons/pokemonSlice";
+import { addPokemon, getPokemonById } from "../features/pokemons/pokemonSlice";
 import { useNavigate } from "react-router-dom";
 
 const style = {
@@ -52,6 +52,9 @@ export default function PokemonModal({ open, setOpen }) {
       category,
       abilities,
     } = data;
+
+    getPokemonById(id);
+
     dispatch(
       addPokemon({
         name,
@@ -65,10 +68,10 @@ export default function PokemonModal({ open, setOpen }) {
         abilities,
       })
     );
+    handleClose();
     setTimeout(() => {
       navigate(`/pokemons/${id}`);
-    }, 3000);
-    handleClose();
+    }, 1000);
   };
 
   const handleClose = () => setOpen(false);
