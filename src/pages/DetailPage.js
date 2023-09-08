@@ -34,7 +34,9 @@ export const DetailPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getPokemonById(id));
+    setTimeout(() => {
+      dispatch(getPokemonById(id));
+    }, 3000);
   }, [id, dispatch]);
   const navigate = useNavigate();
 
