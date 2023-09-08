@@ -35,6 +35,7 @@ export default function PokemonModal({ open, setOpen }) {
   const methods = useForm(defaultValues);
   const {
     handleSubmit,
+    reset,
     formState: { isSubmitting },
   } = methods;
   const dispatch = useDispatch();
@@ -65,7 +66,7 @@ export default function PokemonModal({ open, setOpen }) {
         category,
         abilities,
       })
-    );
+    ).then(() => reset());
 
     navigate(`/pokemons/${id}`);
 
