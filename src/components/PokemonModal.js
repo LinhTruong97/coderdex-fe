@@ -53,8 +53,6 @@ export default function PokemonModal({ open, setOpen }) {
       abilities,
     } = data;
 
-    getPokemonById(id);
-
     dispatch(
       addPokemon({
         name,
@@ -68,10 +66,13 @@ export default function PokemonModal({ open, setOpen }) {
         abilities,
       })
     );
-    handleClose();
+
+    getPokemonById(id);
+
     setTimeout(() => {
+      handleClose();
       navigate(`/pokemons/${id}`);
-    }, 1000);
+    }, 3000);
   };
 
   const handleClose = () => setOpen(false);
