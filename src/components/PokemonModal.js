@@ -67,12 +67,14 @@ export default function PokemonModal({ open, setOpen }) {
       })
     );
 
-    getPokemonById(id);
+    navigate(`/pokemons/${id}`);
 
-    setTimeout(() => {
-      handleClose();
-      navigate(`/pokemons/${id}`);
-    }, 3000);
+    // getPokemonById(id);
+
+    // setTimeout(() => {
+    //   handleClose();
+    //   navigate(`/pokemons/${id}`);
+    // }, 3000);
   };
 
   const handleClose = () => setOpen(false);
