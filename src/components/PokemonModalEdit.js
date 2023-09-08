@@ -75,7 +75,7 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
         newAbilities,
       })
     ).then(() => reset());
-    navigate(`/pokemons/${pokemon?.id}`);
+    // navigate(`/pokemons/${pokemon?.id}`);
 
     // handleClose();
     // setTimeout(() => {
