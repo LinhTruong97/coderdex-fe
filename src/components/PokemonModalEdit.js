@@ -24,15 +24,15 @@ const style = {
 
 export default function PokemonModalEdit({ open, setOpen, pokemon }) {
   const defaultValues = {
-    name: pokemon?.name,
-    url: pokemon?.url,
-    type1: pokemon?.types[0],
-    type2: pokemon?.types[1] || "",
-    description: pokemon?.description,
-    height: pokemon?.height,
-    weight: pokemon?.weight,
-    category: pokemon?.category,
-    abilities: pokemon?.abilities,
+    name: "",
+    url: "",
+    type1: "",
+    type2: "",
+    description: "",
+    height: "",
+    weight: "",
+    category: "",
+    abilities: "",
   };
   const methods = useForm({
     defaultValues,
