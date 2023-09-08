@@ -39,7 +39,6 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
   });
   const {
     handleSubmit,
-    reset,
     formState: { isSubmitting },
   } = methods;
 
@@ -73,9 +72,11 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
         category,
         abilities,
       })
-    ).then(() => reset());
+    );
     handleClose();
-    navigate(`/pokemons/${pokemon?.id}`);
+    setTimeout(() => {
+      navigate(`/pokemons/${pokemon?.id}`);
+    }, 3000);
   };
 
   const handleClose = () => setOpen(false);

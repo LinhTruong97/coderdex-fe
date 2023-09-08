@@ -65,7 +65,9 @@ export default function PokemonModal({ open, setOpen }) {
         abilities,
       })
     );
-    navigate(`/pokemons/${id}`);
+    setTimeout(() => {
+      navigate(`/pokemons/${id}`);
+    }, 3000);
   };
 
   const handleClose = () => setOpen(false);
