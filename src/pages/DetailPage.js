@@ -244,8 +244,7 @@ export const DetailPage = () => {
                 <PokemonModalEdit
                   open={open}
                   setOpen={setOpen}
-                  name={pokemon?.name}
-                  pokemon={pokemon}
+                  id={pokemon?.id}
                 />
 
                 <Button
@@ -258,7 +257,9 @@ export const DetailPage = () => {
                   }}
                   onClick={() => {
                     dispatch(deletePokemon(id));
-                    navigate("/");
+                    setTimeout(() => {
+                      navigate("/");
+                    }, 2000);
                   }}
                 >
                   Delete Pokemon

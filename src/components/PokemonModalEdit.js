@@ -3,11 +3,11 @@ import { FormProvider, FTextField } from "./form";
 import Modal from "@mui/material/Modal";
 
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { alpha, Stack } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
-import { editPokemon } from "../features/pokemons/pokemonSlice";
+import { editPokemon, getPokemonById } from "../features/pokemons/pokemonSlice";
 import { useNavigate } from "react-router-dom";
 
 const style = {
@@ -22,8 +22,8 @@ const style = {
   p: 4,
 };
 
-export default function PokemonModalEdit({ open, setOpen, pokemon }) {
-  console.log(pokemon);
+export default function PokemonModalEdit({ open, setOpen, id }) {
+  const { pokemon } = useSelector((state) => state.pokemons.pokemon);
   const defaultValues = {
     newName: "",
     newUrl: "",
@@ -64,23 +64,25 @@ export default function PokemonModalEdit({ open, setOpen, pokemon }) {
     newType2 = newType2 ? newType2 : pokemon?.types[1];
     dispatch(
       editPokemon({
-        newName,
-        id: pokemon?.id,
-        imgUrl: newUrl,
+        name: newName ? newName : pokemon?.name,
+        id: id,
+        imgUrl: newUrl ? newUrl : pokemon?.url,
         types: newType2 ? [newType1, newType2] : [newType1],
-        newDescription,
-        newHeight,
-        newWeight,
-        newCategory,
-        newAbilities,
+        description: newDescription ? newDescription : pokemon?.description,
+        height: newHeight ? newHeight : pokemon?.height,
+        weight: newWeight ? newWeight : pokemon?.weight,
+        category: newCategory ? newCategory : pokemon?.category,
+        abilities: newAbilities ? newAbilities : pokemon?.abilities,
       })
-    ).then(() => reset());
-    // navigate(`/pokemons/${pokemon?.id}`);
+    ).then(() => {
+      reset();
+    });
 
-    // handleClose();
-    // setTimeout(() => {
-    //   navigate(`/pokemons/${pokemon?.id}`);
-    // }, 3000);
+    setTimeout(() => {
+      handleClose();
+      dispatch(getPokemonById(id));
+      navigate(`/pokemons/${id}`);
+    }, 3000);
   };
 
   const handleClose = () => setOpen(false);

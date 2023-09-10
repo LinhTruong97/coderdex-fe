@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { alpha, Stack } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
-import { addPokemon, getPokemonById } from "../features/pokemons/pokemonSlice";
+import { addPokemon } from "../features/pokemons/pokemonSlice";
 import { useNavigate } from "react-router-dom";
 
 const style = {
@@ -35,7 +35,6 @@ export default function PokemonModal({ open, setOpen }) {
   const methods = useForm(defaultValues);
   const {
     handleSubmit,
-    reset,
     formState: { isSubmitting },
   } = methods;
   const dispatch = useDispatch();
@@ -66,16 +65,12 @@ export default function PokemonModal({ open, setOpen }) {
         category,
         abilities,
       })
-    ).then(() => reset());
+    );
 
-    navigate(`/pokemons/${id}`);
-
-    // getPokemonById(id);
-
-    // setTimeout(() => {
-    //   handleClose();
-    //   navigate(`/pokemons/${id}`);
-    // }, 3000);
+    setTimeout(() => {
+      handleClose();
+      navigate(`/pokemons/${id}`);
+    }, 3000);
   };
 
   const handleClose = () => setOpen(false);
